@@ -513,7 +513,7 @@ class Receiver extends Thread{
                     int fileSize = dis.readInt();
                     byte[] data = new byte[fileSize];
                     dis.readFully(data);
-                    try (FileOutputStream fos = new FileOutputStream(Main.outputdir + "\\" + fileName)) {
+                    try (FileOutputStream fos = new FileOutputStream(Main.outputdir + "/" + fileName)) {
                         fos.write(data);
                     }
                     dos.writeUTF("done");
