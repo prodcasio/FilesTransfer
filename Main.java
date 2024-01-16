@@ -2,6 +2,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -405,7 +407,6 @@ class PopUpIP extends JPopupMenu {
         JPanel panel = new JPanel();
         JTextField message = new JTextField();
         Main.setSizeOfComponent(message, 200, 20);
-        message.grabFocus();
         panel.add(message);
         anItem.addActionListener(e -> {
             int res = JOptionPane.showOptionDialog(null, panel, "Send message to " + IP + ":" + name, JOptionPane.DEFAULT_OPTION,
