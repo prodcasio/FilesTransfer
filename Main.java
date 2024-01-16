@@ -344,7 +344,9 @@ class FileSender extends Thread{
     @Override
     public void run(){
         try {
-            Socket s = new Socket(IP, Main.filePort);DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+            Socket s = new Socket(IP, Main.filePort);
+            System.out.println("inviato " + IP);
+            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
             DataInputStream dis = new DataInputStream(s.getInputStream());
             dos.writeUTF(String.valueOf(Main.filePaths.size()));
             String answer = dis.readUTF();
@@ -352,7 +354,7 @@ class FileSender extends Thread{
                 Main.noticesText.setText(Main.noticesText.getText() + "[ ! ] User " + IP + " rejected your " + (Main.filePaths.size() == 1 ? "file" : "files") + ".\n");
                 Main.rejected.set(rejectedIndex, (Main.rejected.get(rejectedIndex))+1);
                 Main.selectedText.setText(Main.selectedText.getText().replace(", " + IP, ""));
-                Main.selectedText.setText(Main.selectedText.getText().replace(" " + IP, ""));
+                Main.selectedText.setText(Main.selectedText.getText().replace(IP + ", ", ""));
                 s.close();
                 this.interrupt();
                 return;
@@ -427,6 +429,7 @@ class PopUpIP extends JPopupMenu {
 class DragListener extends DropTarget {
     @Override
     public void drop(DropTargetDropEvent dtde) {
+        Main.filePaths.clear();
         dtde.acceptDrop(DnDConstants.ACTION_COPY);
         Transferable t = dtde.getTransferable();
         DataFlavor[] df = t.getTransferDataFlavors();
@@ -472,7 +475,7 @@ class Receiver extends Thread{
                 timerText.setEnabled(false);
                 optionPanel.add(timerText);
                 Timer timer = new Timer(1000 , new ActionListener() {
-                    int timeLeft = 10;
+                    int timeLeft = 11;
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -510,7 +513,7 @@ class Receiver extends Thread{
                     int fileSize = dis.readInt();
                     byte[] data = new byte[fileSize];
                     dis.readFully(data);
-                    try (FileOutputStream fos = new FileOutputStream(Main.outputdir + fileName)) {
+                    try (FileOutputStream fos = new FileOutputStream(Main.outputdir + "\\" + fileName)) {
                         fos.write(data);
                     }
                     dos.writeUTF("done");
