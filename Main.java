@@ -26,7 +26,7 @@ public class Main {
     public static String username = "user";
     public static boolean type10 = false;
     public static JFrame mainFrame;
-    public static String outputdir;
+    public static String outputdir = "./";
     public static JTextArea noticesText;
     public static ArrayList<Integer> rejected = new ArrayList<>();
     public static JButton sendButton;
