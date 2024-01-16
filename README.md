@@ -1,4 +1,4 @@
-# FileTransfer in Java 
+# FilesTransfer in Java 
 
 Use the config.ini to set some important parameters:
   - uername: the username you want to use while using the network
