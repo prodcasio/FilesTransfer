@@ -403,8 +403,9 @@ class PopUpIP extends JPopupMenu {
     public PopUpIP(String IP, String name) {
         anItem = new JMenuItem("Send message");
         JPanel panel = new JPanel();
-        JTextArea message = new JTextArea();
+        JTextField message = new JTextField();
         Main.setSizeOfComponent(message, 200, 20);
+        message.grabFocus();
         panel.add(message);
         anItem.addActionListener(e -> {
             int res = JOptionPane.showOptionDialog(null, panel, "Send message to " + IP + ":" + name, JOptionPane.DEFAULT_OPTION,
