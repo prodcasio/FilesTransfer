@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: Main
-Class-Path: miglayout-3.7.4.jar flatlaf-3.3.jar
+Class-Path: flatlaf-3.3.jar miglayout-3.7.4.jar
 

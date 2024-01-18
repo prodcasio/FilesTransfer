@@ -5,8 +5,8 @@
       <element id="archive" name="FilesTransfer.jar">
         <element id="module-output" name="FilesTransfer" />
       </element>
-      <element id="library" level="project" name="miglayout" />
       <element id="library" level="project" name="formdev.flatlaf" />
+      <element id="library" level="project" name="miglayout" />
     </root>
   </artifact>
 </component>
