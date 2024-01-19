@@ -100,12 +100,12 @@ public class Main {
         JButton addIPButton = new JButton("+");
         addIPButton.addActionListener(e -> {
             JPanel panel = new JPanel(new FlowLayout());
-            JTextArea addIP = new JTextArea();
+            JTextField addIP = new JTextField();
             setSizeOfComponent(addIP, 200, 20);
             JTextArea addColon = new JTextArea(":");
             setSizeOfComponent(addColon, 10, 23);
             addColon.setEditable(false);
-            JTextArea addUsername = new JTextArea();
+            JTextField addUsername = new JTextField();
             addUsername.setAlignmentX(JTextField.CENTER);
             addUsername.setAlignmentY(JTextField.CENTER);
             setSizeOfComponent(addUsername, 100, 20);
@@ -140,13 +140,13 @@ public class Main {
 
             JTextArea usernameText = new JTextArea("Username");
             usernameText.setEnabled(false);
-            JTextArea usernameInput = new JTextArea(username);
+            JTextField usernameInput = new JTextField(username);
             panel.add(usernameText, "split 2");
             panel.add(usernameInput, "wrap");
 
             JTextArea IPText = new JTextArea("Local IP");
             IPText.setEnabled(false);
-            JTextArea IPInput = new JTextArea(localIP);
+            JTextField IPInput = new JTextField(localIP);
             panel.add(IPText, "split 2");
             panel.add(IPInput, "wrap");
 
