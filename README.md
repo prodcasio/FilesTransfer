@@ -1,5 +1,7 @@
 # FilesTransfer in Java 
 
+To run the software, open the already compiled jar in the \bin folder. You can pull the directory to compile it yourself.
+
 Use the config.ini to set some important parameters:
   - uername: the username you want to use while using the network
   - outputdir: the directory you want to save your files in (you need to put a final slash for it to work, for example "C:\users\me\")
