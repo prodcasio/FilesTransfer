@@ -69,11 +69,11 @@ public class Main {
         sendButton = new JButton("Send");
         sendButton.addActionListener(e -> {
             if(fileSelectText.getText().equals("Drag and drop here.")){
-                noticesText.setText(noticesText.getText() + "[ ! ] Upload at least on file before sending.\n");
+                noticesText.setText(noticesText.getText() + "[ ! ] Upload at least one file before sending.\n");
                 return;
             }
             if(selectedText.getText().equals("Selected:")){
-                noticesText.setText(noticesText.getText() + "[ ! ] Select an IP before sending.\n");
+                noticesText.setText(noticesText.getText() + "[ ! ] Select at least one IP before sending.\n");
                 return;
             }
             new MainFileSender();
