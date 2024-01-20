@@ -113,24 +113,35 @@ public class Main {
             panel.add(addIP);
             panel.add(addColon);
             panel.add(addUsername);
+            boolean repeated = false;
+            do {
+                int res = JOptionPane.showOptionDialog(null, panel, "Add IP", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.PLAIN_MESSAGE, null, null, null);
 
-            int res = JOptionPane.showOptionDialog(null, panel, "Add IP", JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.PLAIN_MESSAGE, null, null, null);
-
-            if(res==0 && !addIP.getText().isEmpty() && !addUsername.getText().isEmpty()) {
-                JButton button = new JButton(addIP.getText() + ":" + addUsername.getText());
-                button.addActionListener(e2 -> {
-                    if(Main.selectedText.getText().contains(addIP.getText())) return;
-                    if(Main.selectedText.getText().equals("Selected:"))
-                        Main.selectedText.setText(Main.selectedText.getText() + " " + addIP.getText());
-                    else Main.selectedText.setText(Main.selectedText.getText() + ", " + addIP.getText());
-                });
-                button.addMouseListener(new PopClickListener());
-                availableIPs.add(button);
-                updateIPs();
-                mainFrame.setVisible(true);
-                mainFrame.repaint();
-            }
+                repeated = false;
+                if (res == 0 && !addIP.getText().isEmpty() && !addUsername.getText().isEmpty()) {
+                    for (JButton button : availableIPs) {
+                        String username = button.getText().split(":")[1];
+                        if (username.equals(addUsername.getText())) repeated = true;
+                    }
+                    if (!repeated) {
+                        JButton button = new JButton(addIP.getText() + ":" + addUsername.getText());
+                        button.addActionListener(e2 -> {
+                            if (Main.selectedText.getText().contains(addIP.getText())) return;
+                            if (Main.selectedText.getText().equals("Selected:"))
+                                Main.selectedText.setText(Main.selectedText.getText() + " " + addIP.getText());
+                            else Main.selectedText.setText(Main.selectedText.getText() + ", " + addIP.getText());
+                        });
+                        button.addMouseListener(new PopClickListener());
+                        availableIPs.add(button);
+                        updateIPs();
+                        mainFrame.setVisible(true);
+                        mainFrame.repaint();
+                    } else{
+                        JOptionPane.showMessageDialog(panel, "This username already exists, please choose another one.", "Username already exists.", JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+            }while(repeated);
         });
         addIPButton.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -184,6 +195,13 @@ public class Main {
 
             JButton save = new JButton("Save");
             save.addActionListener(e1 -> {
+                for (JButton button : availableIPs) {
+                    String username = button.getText().split(":")[1];
+                    if (username.equals(usernameInput.getText())){
+                        JOptionPane.showMessageDialog(frame, "Username already in use, please choose another one", "Username already exists", JOptionPane.PLAIN_MESSAGE);
+                        return;
+                    }
+                }
                 username = usernameInput.getText();
                 localIP = IPInput.getText();
                 outputdir = directoryTextArea.getText();
@@ -541,7 +559,7 @@ class Bomber extends Thread{
         try {
             byte[] buf = Main.username.getBytes();
             if(Main.type10) {
-                for (int i = 20; i < 25; i++) {
+                for (int i = 1; i < 25; i++) {
                     for (int j = 0; j < 253; j++) {
                         if (i == IP.third && j == IP.fourth) continue;
                         DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName("10.0." + i + "." + j), Main.infoPort);
